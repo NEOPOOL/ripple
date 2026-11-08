@@ -1,0 +1,1 @@
+# CalmHaven Proguard Rules

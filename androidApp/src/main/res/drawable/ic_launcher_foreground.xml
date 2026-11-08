@@ -1,0 +1,50 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Outer Ambient Ripple Ring -->
+    <path
+        android:strokeColor="#2E4589FF"
+        android:strokeWidth="1.4"
+        android:strokeLineCap="round"
+        android:pathData="M54,54m-27,0a27,27 0 1,1 54,0a27,27 0 1,1 -54,0" />
+
+    <!-- Mid Harmonic Ripple Ring -->
+    <path
+        android:strokeColor="#660F62FE"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:pathData="M54,54m-18,0a18,18 0 1,1 36,0a18,18 0 1,1 -36,0" />
+
+    <!-- Inner Luminous Ripple Ring -->
+    <path
+        android:strokeColor="#B84589FF"
+        android:strokeWidth="2.2"
+        android:strokeLineCap="round"
+        android:pathData="M54,54m-10,0a10,10 0 1,1 20,0a10,10 0 1,1 -20,0" />
+
+    <!-- Central Sculpted Water Drop / Focus Node -->
+    <path
+        android:pathData="M54,43 C51,47 47,52 47,56 C47,59.9 50.1,63 54,63 C57.9,63 61,59.9 61,56 C61,52 57,47 54,43 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="54"
+                android:startY="43"
+                android:endX="54"
+                android:endY="63"
+                android:type="linear">
+                <item android:color="#4589FF" android:offset="0.0"/>
+                <item android:color="#0F62FE" android:offset="1.0"/>
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Specular Micro-Highlight -->
+    <path
+        android:fillColor="#E6FFFFFF"
+        android:pathData="M52.8,51 C52.8,49.5 53.5,47.5 54,46 C54.3,47.5 54.9,49.2 54.9,51 C54.9,52.2 53.9,53 52.8,53 C52.8,52.4 52.8,51.8 52.8,51 Z" />
+
+</vector>
