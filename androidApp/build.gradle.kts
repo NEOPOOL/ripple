@@ -21,9 +21,22 @@ android {
         }
     }
 
+    signingConfigs {
+        create("release") {
+            val keystoreFile = file("release.keystore")
+            if (keystoreFile.exists()) {
+                storeFile = keystoreFile
+                storePassword = System.getenv("RIPPLE_KEYSTORE_PASSWORD") ?: "ripple1234"
+                keyAlias = System.getenv("RIPPLE_KEY_ALIAS") ?: "ripple_release_key"
+                keyPassword = System.getenv("RIPPLE_KEY_PASSWORD") ?: "ripple1234"
+            }
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

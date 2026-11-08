@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ripple — Somatic Grounding & Anxiety Relief</title>
+  <meta name="description" content="Interrupt panic surges, sensory overload, and acute anxiety through evidence-based somatic breathing, tactile micro-interactions, and on-device procedural audio.">
+  <meta name="theme-color" content="#080B11">
+  <link rel="icon" type="image/png" href="assets/icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #080B11;
+      --bg-card: #0F131D;
+      --bg-card-hover: #151B29;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-focus: rgba(69, 137, 255, 0.45);
+      --blue: #0F62FE;
+      --blue-light: #4589FF;
+      --purple: #8A3FFC;
+      --coral: #FA4D56;
+      --text-pri: #F4F6FB;
+      --text-sec: #9EA5B5;
+      --text-muted: #646C7E;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text-pri);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Ambient Fluid Glow Backdrop */
+    .ambient-glow {
+      position: fixed;
+      top: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 900px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(15, 98, 254, 0.15) 0%, rgba(138, 63, 252, 0.08) 45%, transparent 70%);
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background: rgba(8, 11, 17, 0.75);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      padding: 16px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-pri);
+      font-weight: 600;
+      letter-spacing: 2px;
+      font-size: 15px;
+    }
+    .brand img {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+    .nav-links a {
+      color: var(--text-sec);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover {
+      color: var(--blue-light);
+    }
+    .btn-pill {
+      background: var(--blue);
+      color: white;
+      padding: 8px 18px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 500;
+      transition: all 0.2s;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .btn-pill:hover {
+      background: var(--blue-light);
+      box-shadow: 0 4px 18px rgba(15, 98, 254, 0.35);
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      z-index: 1;
+      max-width: 1140px;
+      margin: 70px auto 40px;
+      padding: 0 24px;
+      text-align: center;
+    }
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(15, 98, 254, 0.12);
+      border: 1px solid rgba(69, 137, 255, 0.35);
+      color: var(--blue-light);
+      padding: 6px 16px;
+      border-radius: 30px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--blue-light);
+      box-shadow: 0 0 8px var(--blue-light);
+    }
+    h1 {
+      font-size: clamp(38px, 6vw, 68px);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    h1 b {
+      font-weight: 600;
+      background: linear-gradient(135deg, #FFF 30%, var(--blue-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-sub {
+      font-size: clamp(16px, 2.2vw, 20px);
+      color: var(--text-sec);
+      max-width: 680px;
+      margin: 0 auto 36px;
+      font-weight: 300;
+      line-height: 1.6;
+    }
+    .cta-row {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 60px;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--blue) 0%, #0043CE 100%);
+      color: white;
+      padding: 14px 32px;
+      border-radius: 28px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 15px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.25s;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(15, 98, 254, 0.4);
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-pri);
+      padding: 14px 28px;
+      border-radius: 28px;
+      text-decoration: none;
+      font-weight: 400;
+      font-size: 15px;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Showcase Banner */
+    .banner-container {
+      max-width: 1060px;
+      margin: 0 auto 80px;
+      padding: 0 20px;
+    }
+    .banner-card {
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+      background: #000;
+    }
+    .banner-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Principles Grid */
+    .section-title {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 50px;
+      padding: 0 20px;
+    }
+    .section-title h2 {
+      font-size: 32px;
+      font-weight: 400;
+      margin-bottom: 12px;
+    }
+    .section-title p {
+      color: var(--text-sec);
+      font-size: 15px;
+    }
+    .features-grid {
+      max-width: 1140px;
+      margin: 0 auto 100px;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+    .f-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px 28px;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .f-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-focus);
+      transform: translateY(-4px);
+    }
+    .f-tag {
+      font-size: 10.5px;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--blue-light);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .f-card h3 {
+      font-size: 20px;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+    .f-card p {
+      color: var(--text-sec);
+      font-size: 14px;
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* Interactive Phone Gallery */
+    .gallery-section {
+      max-width: 1200px;
+      margin: 0 auto 120px;
+      padding: 0 24px;
+    }
+    .gallery-scroll {
+      display: flex;
+      gap: 22px;
+      overflow-x: auto;
+      padding: 20px 8px 40px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+    .gallery-scroll::-webkit-scrollbar {
+      height: 6px;
+    }
+    .gallery-scroll::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 3px;
+    }
+    .screen-item {
+      flex: 0 0 280px;
+      scroll-snap-align: center;
+      border-radius: 28px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+      background: #000;
+      transition: transform 0.3s;
+    }
+    .screen-item:hover {
+      transform: scale(1.03);
+    }
+    .screen-item img {
+      width: 100%;
+      display: block;
+    }
+    .screen-cap {
+      padding: 14px 16px;
+      background: var(--bg-card);
+      font-size: 12px;
+      color: var(--text-sec);
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Trust & Offline Banner */
+    .trust-box {
+      max-width: 900px;
+      margin: 0 auto 100px;
+      padding: 40px 32px;
+      background: linear-gradient(180deg, rgba(15, 98, 254, 0.08) 0%, rgba(138, 63, 252, 0.04) 100%);
+      border: 1px solid rgba(69, 137, 255, 0.25);
+      border-radius: 24px;
+      text-align: center;
+    }
+    .trust-box h3 {
+      font-size: 24px;
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+    .trust-box p {
+      color: var(--text-sec);
+      font-size: 15px;
+      max-width: 650px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 24px 60px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+    footer a {
+      color: var(--text-sec);
+      text-decoration: none;
+      margin: 0 12px;
+      transition: color 0.2s;
+    }
+    footer a:hover {
+      color: var(--blue-light);
+    }
+    .foot-disclaimer {
+      max-width: 760px;
+      margin: 20px auto 0;
+      font-size: 11.5px;
+      line-height: 1.6;
+      color: #555E70;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ambient-glow"></div>
+
+  <nav>
+    <a href="#" class="brand">
+      <img src="assets/icon.png" alt="Ripple Icon">
+      <span>R I P P L E</span>
+    </a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#screens">Screens</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="https://github.com" target="_blank" class="btn-pill">GitHub</a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="badge-pill">
+        <span class="badge-dot"></span>
+        100% Offline • Zero Telemetry
+      </div>
+      <h1>
+        Somatic grounding for <b>anxious moments</b>.
+      </h1>
+      <p class="hero-sub">
+        Evidence-based physiological sigh breathwork, natural tactile grounding anchors, and real-time procedural sound synthesis to guide your nervous system back to baseline.
+      </p>
+
+      <div class="cta-row">
+        <a href="#screens" class="btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/>
+          </svg>
+          Explore Somatic Spaces
+        </a>
+        <a href="privacy.html" class="btn-secondary">Read Privacy Guarantee</a>
+      </div>
+    </section>
+
+    <!-- Feature Banner Card -->
+    <section class="banner-container">
+      <div class="banner-card">
+        <img src="assets/banner.png" alt="Ripple Harmonic Wave Graphic">
+      </div>
+    </section>
+
+    <!-- Somatic Pillars -->
+    <section id="features" class="section-title">
+      <h2>Engineered for Autonomous Calm</h2>
+      <p>Low cognitive load, non-verbal somatic anchors designed to interrupt acute sympathetic fight-or-flight arousal.</p>
+    </section>
+
+    <div class="features-grid">
+      <div class="f-card">
+        <div class="f-tag">Neurobiological Reset</div>
+        <h3>Physiological Sigh</h3>
+        <p>Two swift inhales to re-inflate collapsed alveoli followed by a prolonged sigh exhale to trigger parasympathetic deceleration of heart rate variability.</p>
+      </div>
+
+      <div class="f-card">
+        <div class="f-tag">Tactile Grounding</div>
+        <h3>Tumbled Basalt Stone</h3>
+        <p>A digital worry stone rendered from real natural beach rock with continuous micro-friction haptics calibrated to stimulate slow-adapting Merkel receptors.</p>
+      </div>
+
+      <div class="f-card">
+        <div class="f-tag">Somatic Closure</div>
+        <h3>Tactile Bubbles</h3>
+        <p>Floating organic soap bubbles with caustic specular reflections, multi-touch glide gestures, and size-modulated acoustic popping frequencies.</p>
+      </div>
+
+      <div class="f-card">
+        <div class="f-tag">Acute Panic Protocol</div>
+        <h3>SOS 5-4-3-2-1 Flow</h3>
+        <p>Step-by-step clinical grounding sequence engaging all five sensory modalities to anchor awareness and de-escalate acute dissociation or panic surges.</p>
+      </div>
+
+      <div class="f-card">
+        <div class="f-tag">Zero Latency Audio</div>
+        <h3>Binaural Brainwave Beats</h3>
+        <p>Procedural on-device audio synthesis generating Theta (6 Hz) and Alpha (10 Hz) carrier waves with 10-second respiratory swell modulation.</p>
+      </div>
+
+      <div class="f-card">
+        <div class="f-tag">Visuomotor Pacing</div>
+        <h3>Liquid Silk</h3>
+        <p>Smooth multi-touch GPU fluid streamline simulation that decelerates rapid ocular saccades and redirects intrusive cyclical thoughts into spatial calm.</p>
+      </div>
+    </div>
+
+    <!-- Phone Screen Gallery -->
+    <section id="screens" class="section-title">
+      <h2>Designed for Tranquility</h2>
+      <p>Captured native on device with deep obsidian backdrops and IBM Carbon ergonomic clarity.</p>
+    </section>
+
+    <div class="gallery-section">
+      <div class="gallery-scroll">
+        <div class="screen-item">
+          <img src="assets/1_splash_somatic_bloom.png" alt="Splash Screen">
+          <div class="screen-cap">Somatic Bloom Splash</div>
+        </div>
+        <div class="screen-item">
+          <img src="assets/6_home_daily_pacing.png" alt="Home Screen Daily Pacing">
+          <div class="screen-cap">Physiological Sigh & Home</div>
+        </div>
+        <div class="screen-item">
+          <img src="assets/2_tactile_stone_grounding.png" alt="Tactile Stone Grounding">
+          <div class="screen-cap">Basalt Worry Stone</div>
+        </div>
+        <div class="screen-item">
+          <img src="assets/3_tactile_bubbles_acoustic.png" alt="Tactile Bubbles">
+          <div class="screen-cap">Organic Bubbles & Shadows</div>
+        </div>
+        <div class="screen-item">
+          <img src="assets/4_acute_sos_54321_grounding.png" alt="Acute SOS 54321 Grounding">
+          <div class="screen-cap">5-4-3-2-1 Sensory SOS</div>
+        </div>
+        <div class="screen-item">
+          <img src="assets/5_soundscape_binaural_beats.png" alt="Binaural Soundscape Mixer">
+          <div class="screen-cap">Binaural Entrainment Mixer</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trust & Privacy Box -->
+    <div class="trust-box">
+      <h3>Your Mental Health is Completely Private</h3>
+      <p>
+        Ripple has no login, no accounts, no cloud servers, and no tracking scripts. All synthesizers and fluid physics calculate locally on your hardware. We collect zero data.
+      </p>
+    </div>
+  </main>
+
+  <footer>
+    <div>
+      <a href="#">Home</a>
+      <a href="#features">Features</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="mailto:meetvayu@gmail.com">Contact Vayu Labs</a>
+    </div>
+    <p style="margin-top: 14px;">© 2026 Vayu Labs. All rights reserved.</p>
+    <p class="foot-disclaimer">
+      Disclaimer: Ripple is an educational self-regulation and somatic relaxation companion. It is not a medical device, nor does it provide clinical diagnosis, psychiatric therapy, or medical treatment. If you are experiencing a mental health emergency, please dial 988 (US/Canada), 111 (UK), 14416 (India), or contact your local emergency services.
+    </p>
+  </footer>
+
+</body>
+</html>

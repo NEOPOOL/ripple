@@ -660,6 +660,25 @@ fun HomeScreen(
                         lineHeight = 17.sp,
                         color = RippleColors.textSecondary
                     )
+
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    // Medical & Wellness Disclaimer
+                    Text(
+                        text = "WELLNESS DISCLAIMER",
+                        fontSize = 10.sp,
+                        fontWeight = FontWeight.Normal,
+                        letterSpacing = 1.5.sp,
+                        color = IbmBlueLight
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = "Ripple is an educational somatic grounding tool, not a substitute for clinical psychiatric care, diagnosis, or medical treatment. In a crisis, dial 988 or local emergency services.",
+                        fontSize = 11.sp,
+                        fontWeight = FontWeight.Light,
+                        lineHeight = 16.sp,
+                        color = RippleColors.textSecondary
+                    )
                 }
             },
             confirmButton = {
